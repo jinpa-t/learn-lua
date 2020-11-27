@@ -266,47 +266,46 @@
         local exam = {2,3,5,4,5,6}
         print(unpack(exam)) -- unpack prints all the elements
         local arry = {3,44,18,22,43}
-		table.sort(arry, function(a,b) return  a < b end) -- this will sort the arry in increasing order
-		
-		-- Simple Queue in Lua
-		local queue = {3,44,18,22,43}
-		table.remove(queue,1) -- dequeing
-		table.insert(queue,6) -- inqueueing
-		print(queue[#queue]) -- back
-		print(queue[1]) -- front 
-		queue = {}; -- emptying queue
-		print(unpack(queue))
-		print(#queue) -- queue size
+	table.sort(arry, function(a,b) return  a < b end) -- this will sort the arry in increasing order
+	-- Simple Queue in Lua
+	local queue = {3,44,18,22,43}
+	table.remove(queue,1) -- dequeing
+	table.insert(queue,6) -- inqueueing
+	print(queue[#queue]) -- back
+	print(queue[1]) -- front 
+	queue = {}; -- emptying queue
+	print(unpack(queue))
+	print(#queue) -- queue size
 
-		-- Simple Stack in Lua
-		stack = {3,44,18,22,43} -- Stack is Last In First Out (LIFO)
+	-- Simple Stack in Lua
+	stack = {3,44,18,22,43} -- Stack is Last In First Out (LIFO)
 
-		-- push element to the top
-		function stack.push(item)
-		    table.insert(stack, item) 
-		end
-		-- remove the top 
-		function stack.pop()
-		    return table.remove(stack)
-		end
+	-- push element to the top
+	function stack.push(item)
+	    table.insert(stack, item) 
+	end
+	-- remove the top 
+	function stack.pop()
+	    return table.remove(stack)
+	end
 
-		stack.pop(stack) -- pop top 
-		stack.push(6) -- push 6 to the stack
-		print(stack.pop()) -- pop top
-		stack = {}; -- emptying stack
-		print(#stack) -- stack size
+	stack.pop(stack) -- pop top 
+	stack.push(6) -- push 6 to the stack
+	print(stack.pop()) -- pop top
+	stack = {}; -- emptying stack
+	print(#stack) -- stack size
 
 
-		-- LIFO Linked List in Lua
-		local list = nil -- lifo LInked List
-		list = {next = list, value = 4}  -- next points to nul
-		list = {next = list, value = 5}  -- next points to 4
-		list = {next = list, value = 6}  -- next points to 5
-		local l = list
-		while l do
-		    print(l.value)
-		    l = l.next
-		end
+	-- LIFO Linked List in Lua
+	local list = nil -- lifo LInked List
+	list = {next = list, value = 4}  -- next points to nul
+	list = {next = list, value = 5}  -- next points to 4
+	list = {next = list, value = 6}  -- next points to 5
+	local l = list
+	while l do
+	    print(l.value)
+	    l = l.next
+	end
 
         </pre>
     </div>
