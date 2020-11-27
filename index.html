@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lua Code Display</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i,900,900i" type="text/css" media="all">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=lua&skin=sunburst"></script>
+
+    <script type="text/javascript" src="lua.js"></script>
+</head>
+
+<body>
+    <a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+    <div id="content">
+        <h3>Lua Basics</h3>
+        <p>Comments</p>
+        <pre class="prettyprint linenums lang-lua">
+        
+        -- Single line comment format
+        --[[
+            Multi-line comment format
+
+        --]]
+        local x = 5  -- assign 5 to x
+        </pre>
+        <p>Variables</p>
+        <pre class="prettyprint linenums lang-lua">
+        --[[ Variable naming convention: a variable can start with any 'a-z','A-Z',and '_' character but cannot
+        start with any other characters.
+        --]] 
+        -- illegal variable names
+        local 0var = 5
+        local 55 = 2
+        local &myVar = "not valid";
+        -- legal variable names
+        local _0s = 5
+        local x = 5
+        y_1 = 5
+        local name = "John Doe"
+        local verified = false
+        local __ = "weird variable name" -- not preferred because of readbility
+
+        </pre>
+        <p>Types</p>
+        <pre class="prettyprint linenums lang-lua">        
+        -- data types
+        local found = false;  -- boolean
+        local x = 5  -- x is integer
+        local irrational = 3.14 -- floating point
+        local empty = null;  -- nil or empty variable
+        local name = "John"  -- string
+        local gender = 'm'  -- also string there is no char type in lua
+        loca foo = function() -- type of foo is function
+            print("hello")
+        end
+        local data = {1,2}  -- type of data is table
+
+        local foo1 = coroutine.create(function()
+          print("thread")
+        end)
+        coroutine.resume(foo1) -- type of foo1 is thread
+        local myProxy = newproxy() -- type of myProxy is userdata
+        </pre>
+        <p>If else conditional statement</p>
+        <pre class="prettyprint linenums lang-lua">        
+        -- operators: >, <, >=, <=, ==, ~=, not, and, or
+        local x = true
+        local y = true
+        if x and y then -- true since x and y both are true
+            print('true')
+        end
+        if x or y then -- true since x and y both are true
+            print('true')
+        end
+        if x and not y then -- false since not y is false
+            print('true')
+        end
+        if x or not y then -- true since x is true
+            print('true')
+        end
+        if not x or not y then -- false since both not x and not y is false
+            print('true')
+        end
+        </pre>
+        <p>For Loops</p>
+        <pre class="prettyprint linenums lang-lua">        
+        -- indxed for loop
+        local scores = {76,83,91,85}
+        for i,v in ipairs(scores) do -- i stands for index and v stands for value
+            print("index: ",i," score: ",v)
+        end
+        -- not indxed for loop
+        local scores2 = {}
+        scores2[1]= 76 
+        scores2[2] = 83
+        scores2[3] = 91
+        scores2[4]= 85
+        scores2["fail"] = 60
+        for i,v in ipairs(scores2) do -- the last element will not be iterated
+            print("index: ",i," score: ",v)
+        end
+        for i=1, #scores2 do -- another way of iterating with index but the last element will not be iterated
+            print("index: ",i," score: ",scores2[i])
+        end
+        for i,v in pairs(scores2) do -- the last element will be iterated
+            print("index: ",i," score: ",v)
+        end
+        </pre>
+        <p>While loops</p>
+        <pre class="prettyprint linenums lang-lua">
+        local i = 1
+        while(i<4) do -- keep looping until the i is less than 4
+            print(i)
+            i = i + 1  -- increment i
+        end
+        </pre>
+        <p>Repeat until loops</p>
+        <pre class="prettyprint linenums lang-lua"> 
+        local i = 1
+        repeat 
+            print(i , "!= 4")
+            i = i + 1
+        until(i==4) -- loop terminates once i is 4
+        </pre>
+        <p>Functions</p>
+        <pre class="prettyprint linenums lang-lua"> 
+        -- function to do things over and over
+        function Max(x,y)
+            -- Return the bigger element
+            if(x > y) then
+                return x -- return terminates the function
+            else
+                return y
+            end
+        end
+        local result = Max(500000000,60000000) -- Max value is assgined to result
+        print(result)
+        -- another way of defining a function
+        local Add = function(x,y)
+            return x + y 
+        end         
+        print(Add(4373,1942)) -- will print 6315
+        -- you can have a function inside a function but only the parent can call it
+        function factorial(n)
+            local function helper(n) -- local function that calculates factorial
+                if(n == 1) then
+                    return 1;
+                else
+                    return n *  helper(n-1)
+                end
+            end
+            local result = helper(n) -- call the local function
+            return result;
+        end
+        print(factorial(5))
+        </pre>
+        <p>String</p>
+        <pre class="prettyprint linenums lang-lua">
+        -- string length
+        local password = "abc123";
+        print(#password) -- the # is for getting length
+        -- find substring returns the index of the substring
+        print(string.find(password,"bc",0,#password)) -- find 'bc' in password
+        -- getting substirng        
+        local start = 1
+        local finish = 3
+        print(string.sub(password,start,finish)) -- prints 'abc'
+        -- transform to uppercase
+        local nameLower = "john"
+        local nameUpper = string.upper(nameLower) -- nameUpper will be 'JOHN'
+        -- transform to lowercase
+        local upperCaseA = "A"
+        local lowerCaseA = string.lower(upperCaseA) -- 'A' will be lowercase 'a'
+        -- get ascii value
+        print(string.byte(upperCaseA,1)) -- will print 65 since ascii value of 'A' is 65
+        -- get character from ascii value
+        print(string.char(65))
+        -- reverse string
+        local palindrome = "racecar ha"
+        print(string.reverse(palindrome))
+        -- find and replace substring
+        local palindrome = "racecar ha"
+        print(string.gsub(palindrome,"ha","first"))
+        -- math string
+        print (string.match ("You see dogs and cats", "s..")) --> word starting with s and any other two characters 
+        -- repeat string 
+        local str = "Repeat"
+        print(string.rep(str, 4)) -- prints "RepeatRepeatRepeatRepeat"        
+        -- Accessing each character
+        local name = "John Doe"
+        for i = 1, #name do 
+            print(i,string.sub(name, i, i)) -- print character by character
+            i = i + 1
+        end
+        -- string concatenation
+        print("Good".." Morning") -- .. is used for concatenating strings
+        -- string formatting %s,%d, %f, %c,%g, %u, %q
+        local city = "New York City"
+        print(string.format("City: %s",city)) --%s string
+        local zipcode = 11111
+        print(string.format("Zipcode: %d",zipcode)) -- %d decimal number and %i also works
+        local PI = 22/7
+        print(string.format("Pi: %.2f",PI)) -- %f floating point
+        local ten = 10
+        print(string.format("Hexadecimal Ten: %x",ten)) -- %x hexadecimal lower %X hexadecimal uppper, will print a
+        print(string.format("Octal Ten: %o",ten)) -- %o octal, will print 12
+        local num = 97
+        print(string.format("97: %c",num)) -- %c character
+        local num = 1000
+        print(string.format ("%e", num)) -- %e scientific notation 1.000000e+03
+        local num = 1000e+20
+        print(string.format ("%g", num)) -- compact 1e+23
+        local num = -1234
+        print(string.format ("%u", num)) -- unsigned
+        print(string.format ("%%")) -- prints %, this formatting is optional
+        print(string.format ("%q", 'the zen of python')) -- print in quote format
+        -- gmath: regular expression matching 
+        local s = "one;two;four"
+        local words = {}
+        for w in (s .. ";"):gmatch("([^;]*);") do 
+            table.insert(words, w) 
+        end
+        for i,w in pairs(words) do
+            print(w)
+        end
+        </pre>
+        <p>Arrays</p>
+        <pre class="prettyprint linenums lang-lua">
+        -- lua array index start from 1 not 0
+        -- array and table are technically same thing
+        local array = {3,4,1,6,5,7,9,8} -- arry with numbers
+        print(array[1]) -- accessing the first element
+        print(array[0]) -- nil 
+        print(#array) -- # for getting a size
+        for i,v in ipairs(array)do -- printing all array values
+            print(v)
+        end
+        for i = 1, #array do -- sorting array in ascending array with selection sort
+            for j = i, #array do
+                if array[i] > array[j] then
+                    local temp = array[j]
+                    array[j]= array[i]
+                    array[i] = temp
+                end
+            end
+        end
+        local array2 = {"New",1,"Age",20,'a'} -- mixed array
+        local array2d = {{2,3,5},{4,5,6}} -- multi-dimensional array
+        for i, v in ipairs(array2d) do -- array2d[1][1] = 2, array2d[2][2] = 5
+            for j,v2 in ipairs(v) do
+                print(v2)
+            end
+        end        
+        </pre>
+        <p>Tables</p>
+        <pre class="prettyprint linenums lang-lua">
+        -- lua is based on table so table is very important in lua
+        local newtable = {}
+        local secondTable = {
+            name = "John"
+        }
+        newtable["name"] = "Doe"  -- indexing with key 
+        print(newtable.name) -- Doe
+        print(secondTable["name"]) -- John
+        local exam = {2,3,5,4,5,6}
+        print(unpack(exam)) -- unpack prints all the elements
+        local arry = {3,44,18,22,43}
+		table.sort(arry, function(a,b) return  a < b end) -- this will sort the arry in increasing order
+		
+		-- Simple Queue in Lua
+		local queue = {3,44,18,22,43}
+		table.remove(queue,1) -- dequeing
+		table.insert(queue,6) -- inqueueing
+		print(queue[#queue]) -- back
+		print(queue[1]) -- front 
+		queue = {}; -- emptying queue
+		print(unpack(queue))
+		print(#queue) -- queue size
+
+		-- Simple Stack in Lua
+		stack = {3,44,18,22,43} -- Stack is Last In First Out (LIFO)
+
+		-- push element to the top
+		function stack.push(item)
+		    table.insert(stack, item) 
+		end
+		-- remove the top 
+		function stack.pop()
+		    return table.remove(stack)
+		end
+
+		stack.pop(stack) -- pop top 
+		stack.push(6) -- push 6 to the stack
+		print(stack.pop()) -- pop top
+		stack = {}; -- emptying stack
+		print(#stack) -- stack size
+
+
+		-- LIFO Linked List in Lua
+		local list = nil -- lifo LInked List
+		list = {next = list, value = 4}  -- next points to nul
+		list = {next = list, value = 5}  -- next points to 4
+		list = {next = list, value = 6}  -- next points to 5
+		local l = list
+		while l do
+		    print(l.value)
+		    l = l.next
+		end
+
+        </pre>
+    </div>
+
+    <footer class="footer">
+        <section class="footer-widgets centered">
+            <div class="widget footer-menu">                
+                <ul>                    
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>            
+        </section><!-- .footer-widgets -->
+        <nav class="social-nav" role="navigation">
+            <ul>
+                <li><a class="icon-linkedin" data-grunticon-embed href="https://linkedin.com"><span class="screen-reader-text">LinkedIn</span></a></li>
+                <li><a class="icon-twitter" data-grunticon-embed href="https://twitter.com"><span class="screen-reader-text">Twitter</span></a></li>
+               
+                <li><a class="icon-youtube" data-grunticon-embed href="https://youtube.com"><span class="screen-reader-text">YouTube</span></a></li>
+            </ul>
+        </nav><!-- .social-nav -->
+    </footer><!-- .footer -->
+    <script type="text/javascript" src="lua.js"></script>
+
+</body>
+
+</html>
